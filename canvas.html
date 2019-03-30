@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <title>PaintBoard</title>
+</head>
+<body>
+
+<canvas id="myCanvas" width="800" height="500"
+style="border:1px solid #000000;">
+</canvas>
+
+<label for="colorWell">Color:</label>
+<input type="color" id = "colorWell">
+
+
+<script>
+var canvas = document.querySelector('canvas');
+var context = canvas.getContext('2d');
+
+var x=0;
+var y=0;
+
+var colorWell;
+var defaultColor = "#0000f1";
+
+window.addEventListener('resize', resizeCanvas, false);
+function  resizeCanvas(){
+  canvas.width = 0.8 * window.innerWidth;
+  canvas.height = 0.8 * window.innerHeight;
+}
+resizeCanvas()
+
+function draw(){
+  context.beginPath()
+  context.fillStyle = defaultColor;
+	context.arc(x,y,25,0,2*Math.PI);
+	context.fill();
+}
+
+window.onload = function(){
+        function onMousemove(ev){
+          x = ev.clientX
+          y = ev.clientY
+
+          draw()
+          defaultColor = document.getElementById("colorWell").value;
+          console.log(document.getElementById("colorWell").value)
+        };
+
+        function onTouchmove(ev){
+          x = ev.touches[0].clientX
+          y = ev.touches[0].clientY
+
+          draw()
+          defaultColor = document.getElementById("colorWell").value;
+          console.log(document.getElementById("colorWell").value)
+        };
+        //     context.lineTo(ev.clientX, ev.clientY);
+        //     context.stroke();
+        // }
+        canvas.addEventListener('mousemove', onMousemove);
+        canvas.addEventListener('touchmove', onTouchmove);
+        // canvas.addEventListener('mouseup', function(){
+        //     canvas.removeEventListener('mousemove', onMousemove);
+        // });
+    // });
+
+
+    document.addEventListener('keydown', function(ev){
+        if(lastDownTarget == canvas){
+            if(ev.keyCode==82){
+                context.closePath();
+                context.beginPath();
+                context.strokeStyle = "#FF0000";
+                context.stroke();
+            }
+            else if(ev.keyCode==66){
+                context.closePath();
+                context.beginPath();
+                context.strokeStyle = "#0000FF";
+                context.stroke();
+            }
+            else if(ev.keyCode==71){
+                context.closePath();
+                context.beginPath();
+                context.strokeStyle = "#00FF00";
+                context.stroke();
+            }
+            else if(ev.keyCode==89){
+                context.closePath();
+                context.beginPath();
+                context.strokeStyle = "#ecec18";
+                context.stroke();
+            }
+            else if(ev.keyCode==38){
+                context.closePath();
+                context.beginPath();
+                context.lineWidth = 11;
+                context.stroke();
+            }
+            else if(ev.keyCode==40){
+                context.closePath();
+                context.beginPath();
+                context.lineWidth = 3;
+                context.stroke();
+            }
+            else if(ev.keyCode==32){
+                context.closePath();
+                context.beginPath();
+                context.clearRect(0, 0, 800, 500);
+                context.stroke();
+            }
+        }
+
+    });
+}
+
+// document.querySelector('#colorWell').value
+
+// grab color picker element
+// add addEventListener and listen to the input event
+// grab the value/color of what the user is picking
+// using .value
+// assign the value to the pen
+
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
