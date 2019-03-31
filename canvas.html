@@ -11,8 +11,8 @@
 style="border:1px solid #000000;">
 </canvas>
 
-<label for="colorWell">Color:</label>
-<input type="color" id = "colorWell">
+<label for="color">Color:</label>
+<input type="color" id = "color">
 
 
 <script>
@@ -21,21 +21,23 @@ var context = canvas.getContext('2d');
 
 var x=0;
 var y=0;
+var z=25;
 
-var colorWell;
+var color;
 var defaultColor = "#0000f1";
+var lastDownTarget;
 
-window.addEventListener('resize', resizeCanvas, false);
-function  resizeCanvas(){
-  canvas.width = 0.8 * window.innerWidth;
-  canvas.height = 0.8 * window.innerHeight;
+window.addEventListener('resize',resizeCanvas, false);
+function resizeCanvas(){
+  canvas.width = 0.8*window.innerWidth;
+  canvas.height = 0.8*window.innerHeight;
 }
-resizeCanvas()
+resizeCanvas();
 
 function draw(){
   context.beginPath()
   context.fillStyle = defaultColor;
-	context.arc(x,y,25,0,2*Math.PI);
+	context.arc(x,y,z,0,2*Math.PI);
 	context.fill();
 }
 
@@ -45,8 +47,7 @@ window.onload = function(){
           y = ev.clientY
 
           draw()
-          defaultColor = document.getElementById("colorWell").value;
-          console.log(document.getElementById("colorWell").value)
+          defaultColor = document.getElementById("color").value;
         };
 
         function onTouchmove(ev){
@@ -54,83 +55,53 @@ window.onload = function(){
           y = ev.touches[0].clientY
 
           draw()
-          defaultColor = document.getElementById("colorWell").value;
-          console.log(document.getElementById("colorWell").value)
+          defaultColor = document.getElementById("color").value;
         };
-        //     context.lineTo(ev.clientX, ev.clientY);
-        //     context.stroke();
-        // }
+
+
         canvas.addEventListener('mousemove', onMousemove);
         canvas.addEventListener('touchmove', onTouchmove);
-        // canvas.addEventListener('mouseup', function(){
-        //     canvas.removeEventListener('mousemove', onMousemove);
-        // });
-    // });
+      };
+
 
 
     document.addEventListener('keydown', function(ev){
-        if(lastDownTarget == canvas){
+        if(lastDownTarget == color){
             if(ev.keyCode==82){
-                context.closePath();
-                context.beginPath();
-                context.strokeStyle = "#FF0000";
-                context.stroke();
+                defaultColor = "#FF0000";
             }
             else if(ev.keyCode==66){
-                context.closePath();
-                context.beginPath();
-                context.strokeStyle = "#0000FF";
-                context.stroke();
+                defaultColor = "#0000FF";
             }
             else if(ev.keyCode==71){
-                context.closePath();
-                context.beginPath();
-                context.strokeStyle = "#00FF00";
-                context.stroke();
+                defaultColor = "#00FF00";
             }
             else if(ev.keyCode==89){
-                context.closePath();
-                context.beginPath();
-                context.strokeStyle = "#ecec18";
-                context.stroke();
+                defaultColor = "#ecec18";
             }
             else if(ev.keyCode==38){
-                context.closePath();
-                context.beginPath();
-                context.lineWidth = 11;
-                context.stroke();
+                z += 3;
             }
             else if(ev.keyCode==40){
-                context.closePath();
-                context.beginPath();
-                context.lineWidth = 3;
-                context.stroke();
+                z -= 3;
             }
             else if(ev.keyCode==32){
-                context.closePath();
-                context.beginPath();
+
                 context.clearRect(0, 0, 800, 500);
-                context.stroke();
             }
         }
 
     });
-}
 
-// document.querySelector('#colorWell').value
+
+// This assignment was done with Wei Zhang together, and we got help from Kangning. Thank you Kanning!
+
 
 // grab color picker element
 // add addEventListener and listen to the input event
 // grab the value/color of what the user is picking
 // using .value
 // assign the value to the pen
-
-
-
-
-
-
-
 
 
 </script>
